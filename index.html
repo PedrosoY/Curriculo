@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfólio — Pedro Paulo Santos de Jesus Júnior</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-pY1+JyZY4v5e9xXuoZ0pEpeG8Y+lJ8DpqZtlH1+cmMHnkwc8LaYQdUA0pJ3OIcfN6hnR1F4Uz0iTF6t7vZp9Vg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/a2e0e6e8d9.js" crossorigin="anonymous"></script>
   <style>
     :root {
       --bg: #0d0d0d;
@@ -17,7 +16,7 @@
       --accent: #38b2ac;
       --text: #e2e8f0;
       --muted: #718096;
-      --transition: 0.4s
+      --transition: 0.4s ease;
     }
 
     * {
@@ -29,56 +28,26 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden
-    }
-
-    header,
-    .hero,
-    .fade-in,
-    .toggle-header,
-    .card,
-    .contact-card,
-    h2.section-title {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .6s ease-out, transform .6s ease-out
-    }
-
-    .visible {
-      opacity: 1;
-      transform: translateY(0)
+      font-family: 'Inter', sans-serif
     }
 
     header {
       position: sticky;
       top: 0;
+      width: 100%;
       background: var(--card);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       z-index: 100
     }
 
     .logo {
-      font: 700 1.5rem/1 Inter;
-      color: var(--primary);
-      cursor: pointer;
-      animation: flash 2s infinite
-    }
-
-    @keyframes flash {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: .7
-      }
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary)
     }
 
     .menu-toggle {
@@ -96,16 +65,11 @@
     }
 
     nav a {
-      position: relative;
       color: var(--text);
       text-decoration: none;
       font-weight: 600;
-      padding: .2rem 0;
-      transition: color var(--transition)
-    }
-
-    nav a:hover {
-      color: var(--accent)
+      position: relative;
+      padding-bottom: 4px
     }
 
     nav a::after {
@@ -121,44 +85,12 @@
     }
 
     nav a:hover::after {
-      width: 100%
-    }
-
-    .btn {
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
-      padding: .5rem 1rem;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .2s
-    }
-
-    .btn:hover {
-      transform: scale(1.05)
-    }
-
-    .btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
       width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, .2);
-      transition: left .3s ease
-    }
-
-    .btn:hover::after {
-      left: 100%
+      background: var(--primary)
     }
 
     .hero {
+      position: relative;
       min-height: 80vh;
       display: flex;
       flex-direction: column;
@@ -168,9 +100,7 @@
       padding: 2rem;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-      overflow: hidden;
-      position: relative;
-      cursor: move
+      overflow: hidden
     }
 
     .hero::before {
@@ -178,24 +108,48 @@
       position: absolute;
       top: -50%;
       left: -50%;
-      width: 120%;
-      height: 120%;
-      background: radial-gradient(circle, rgba(255, 255, 255, .1), transparent);
-      pointer-events: none
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+      animation: rotate 10s linear infinite
     }
 
     @keyframes rotate {
-      100% {
-        transform: rotate(360deg)
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
       }
     }
 
-    h2.section-title {
+    .hero h1 {
       position: relative;
-      font: 600 2.5rem/1 Inter;
+      z-index: 1;
+      font-size: 3rem;
+      color: #fff
+    }
+
+    .hero p {
+      position: relative;
+      z-index: 1;
+      margin-top: .5rem;
+      color: rgba(255, 255, 255, 0.9)
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem
+    }
+
+    h2.section-title {
+      font-size: 2.5rem;
       color: var(--primary);
       text-align: center;
-      margin: 2rem 0 1rem
+      margin-bottom: 1.5rem;
+      position: relative
     }
 
     h2.section-title::after {
@@ -206,37 +160,35 @@
       width: 80px;
       height: 4px;
       background: var(--accent);
-      border-radius: 2px;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      border-radius: 2px
     }
 
-    h2.section-title.visible {
-      animation: scaleUp .5s ease-out
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      transition: transform var(--transition), box-shadow var(--transition)
     }
 
-    @keyframes scaleUp {
-      0% {
-        transform: scale(0.9)
-      }
-
-      100% {
-        transform: scale(1)
-      }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5)
     }
 
-    .timeline,
-    .card-grid,
-    .toggle-content.open {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem
+    .date-range {
+      display: block;
+      font-size: .9rem;
+      color: var(--muted);
+      margin-bottom: .75rem
     }
 
     .timeline {
-      grid-template-columns: none;
+      position: relative;
       margin-left: 1rem;
-      padding-left: 2rem;
-      position: relative
+      padding-left: 2rem
     }
 
     .timeline::before {
@@ -252,27 +204,19 @@
 
     .timeline-item {
       position: relative;
-      animation: fadeInUp .6s ease-out forwards
+      margin-bottom: 2rem
     }
 
-    .timeline-item:nth-child(1) {
-      animation-delay: .2s
-    }
-
-    .timeline-item:nth-child(2) {
-      animation-delay: .4s
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px)
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0)
-      }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.2rem;
+      top: .5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border: 2px solid var(--accent);
+      border-radius: 50%
     }
 
     .toggle-header {
@@ -282,53 +226,65 @@
       background: var(--card);
       padding: 1rem;
       border-radius: 8px;
-      cursor: pointer
+      cursor: pointer;
+      margin-top: 1rem
     }
 
-    .toggle-header.visible {
-      animation: fadeInUp .6s ease-out forwards
+    .toggle-header h3 {
+      font-size: 1.2rem;
+      color: var(--accent)
     }
 
     .toggle-header i {
       transition: transform var(--transition)
     }
 
-    .toggle-header.open i {
-      transform: rotate(180deg)
-    }
-
     .toggle-content {
       display: none
+    }
+
+    .toggle-content.open {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem
     }
 
     .contact-card {
       background: var(--card);
       border-radius: 12px;
       padding: 2rem;
-      text-align: center;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, .4);
       max-width: 400px;
       margin: 0 auto;
-      animation: fadeInUp .6s ease-out forwards;
-      animation-delay: .2s
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4)
     }
 
-    .contact-card img {
+    .contact-card img.photo {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       border: 4px solid var(--accent);
-      margin-bottom: 1rem;
-      transition: transform .3s
-    }
-
-    .contact-card img:hover {
-      transform: scale(1.1)
+      margin-bottom: 1rem
     }
 
     .contact-card h3 {
-      font: 600 1.5rem/1 Inter;
+      font-size: 1.5rem;
+      color: #fff;
       margin-bottom: .5rem
+    }
+
+    .contact-card a.project-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    .contact-card a.project-link i {
+      margin-left: .5rem
     }
 
     .contact-details {
@@ -344,28 +300,16 @@
       gap: .5rem;
       color: var(--text);
       text-decoration: none;
-      font-weight: 600;
-      transition: color var(--transition)
+      font-weight: 600
+    }
+
+    .contact-details a i {
+      font-size: 1.5rem;
+      color: var(--accent)
     }
 
     .contact-details a:hover {
       color: var(--primary)
-    }
-
-    .loader {
-      border: 4px solid var(--card);
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 2rem auto
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg)
-      }
     }
 
     #back-to-top {
@@ -379,21 +323,7 @@
       border-radius: 50%;
       cursor: pointer;
       display: none;
-      animation: bounceIn .5s ease-out
-    }
-
-    @keyframes bounceIn {
-      0% {
-        transform: scale(0)
-      }
-
-      60% {
-        transform: scale(1.2)
-      }
-
-      100% {
-        transform: scale(1)
-      }
+      transition: transform .2s
     }
 
     #back-to-top:hover {
@@ -415,11 +345,32 @@
         gap: 1rem
       }
     }
+
+    footer {
+      background: var(--card);
+      color: var(--muted);
+      text-align: center;
+      padding: 1rem 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid var(--accent);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: color var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
   </style>
 </head>
 
 <body>
-  <header class="fade-in">
+  <header>
     <div class="logo">Pedro Paulo Santos</div>
     <button class="menu-toggle"><i class="fas fa-bars"></i></button>
     <nav>
@@ -427,17 +378,18 @@
         href="#projetos">Projetos</a><a href="#certificados">Certificados</a>
     </nav>
   </header>
-  <div class="hero fade-in">
+  <div class="hero">
     <h1>Pedro Paulo Santos de Jesus Júnior</h1>
     <p>Técnico em TI • Estudante de Engenharia da Computação • Desenvolvedor de Software</p>
   </div>
   <div class="container">
     <section id="contato">
-      <h2 class="section-title fade-in">Contato</h2>
+      <h2 class="section-title">Contato</h2>
       <div class="contact-card">
-        <img src="https://avatars.githubusercontent.com/u/SEU_ID?v=4" alt="Foto de Perfil" />
+        <img src="https://github.com/PedrosoY.png" alt="Foto de Perfil" class="photo" />
         <h3>Pedro Paulo Santos</h3>
-        <a href="https://github.com/PedrosoY" target="_blank" class="btn">Meu Perfil <i class="fab fa-github"></i></a>
+        <a href="https://github.com/PedrosoY" target="_blank" class="project-link">Meu Perfil<i
+            class="fab fa-github"></i></a>
         <div class="contact-details">
           <a href="https://wa.me/5519998560436" target="_blank"><i class="fab fa-whatsapp"></i><span>(19)
               99856-0436</span></a>
@@ -445,29 +397,153 @@
         </div>
       </div>
     </section>
-    <!-- Outras seções (Formação, Experiência, Projetos, Certificados) seguem mesmo padrão de animações -->
+    <section id="formacao">
+      <h2 class="section-title">Formação Acadêmica</h2>
+      <div class="timeline">
+        <div class="timeline-item card">
+          <h3>Engenharia da Computação</h3>
+          <span class="date-range">Março 2022 – Dezembro 2028</span>
+          <p>Graduação em Engenharia da Computação pela Fundação Hermínio Ometto, com foco em sistemas embarcados,
+            algoritmos e desenvolvimento de software.</p>
+        </div>
+        <div class="timeline-item card">
+          <h3>Técnico em Tecnologia da Informação</h3>
+          <span class="date-range">Fevereiro 2019 – Dezembro 2021</span>
+          <p>Formação técnica pelo Centro Municipal, abordando infraestrutura de redes, manutenção de hardware e
+            fundamentos de programação.</p>
+        </div>
+      </div>
+    </section>
+    <section id="experiencia">
+      <h2 class="section-title">Experiência Profissional</h2>
+      <div class="timeline">
+        <div class="timeline-item card">
+          <h3>Subchefe de Lanchonete (WS Grill)</h3>
+          <span class="date-range">Janeiro 2023 – Presente</span>
+          <p>Gerenciamento de equipe, controle de estoque, atendimento ao cliente e melhoria de processos.</p>
+          <ul>
+            <li>Coordenei 8 atendentes</li>
+            <li>Implantei controle reduzindo erros em 15%</li>
+          </ul>
+        </div>
+        <div class="timeline-item card">
+          <h3>Estagiário de Produção (SESCAMP)</h3>
+          <span class="date-range">Março 2021 – Dezembro 2022</span>
+          <p>Auxílio em eventos, manutenção de sistemas de áudio e suporte técnico.</p>
+          <ul>
+            <li>Manutenção preventiva em 12 sistemas</li>
+            <li>Suporte TI em atividades culturais</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="projetos">
+      <h2 class="section-title">Projetos</h2>
+      <!-- Seções criadas dinamicamente -->
+    </section>
+    <section id="certificados">
+      <h2 class="section-title">Certificados</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Inglês Intermediário</h3>
+          <p>IEQ Catedral Ágape Paulínia</p>
+        </div>
+        <div class="card">
+          <h3>C e C++</h3>
+          <p>Danki Code</p>
+        </div>
+        <div class="card">
+          <h3>Word, Excel, PowerPoint</h3>
+          <p>Microcamp</p>
+        </div>
+      </div>
+    </section>
   </div>
   <button id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+  <footer>
+    <p>&copy; 2025 Pedro Paulo Santos de Jesus Júnior</p>
+    <p>
+      <a href="https://github.com/PedrosoY" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      <a href="https://www.linkedin.com/in/pedro-junior1/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://www.instagram.com/pedroso._.oficial/" target="_blank"><i class="fab fa-instagram"></i>
+        Instagram</a>
+    </p>
+  </footer>
+
   <script>
-    $(() => {
+    $(function () {
+      // Toggle menu
       $('.menu-toggle').click(() => $('nav').slideToggle());
+
+      // Back to top button
+      $('#back-to-top').hide();
       $(window).scroll(() => {
-        if ($(window).scrollTop() > 300) $('#back-to-top').fadeIn().addClass('visible');
-        else $('#back-to-top').fadeOut().removeClass('visible');
+        $('#back-to-top').toggle($(window).scrollTop() > 300);
       });
       $('#back-to-top').click(() => $('html,body').animate({ scrollTop: 0 }, 500));
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } });
-      }, { threshold: .2, rootMargin: '-50px' });
-      document.querySelectorAll('.fade-in, h2.section-title, .card, .contact-card').forEach(el => io.observe(el));
-      // Parallax simples
-      document.querySelector('.hero').addEventListener('mousemove', e => {
-        const { width, height } = e.currentTarget.getBoundingClientRect();
-        const x = (e.clientX / width) * 100; const y = (e.clientY / height) * 100;
-        e.currentTarget.style.backgroundPosition = `${x}% ${y}%`;
+
+      // Section toggles
+      $('body').on('click', '.toggle-header', function () {
+        $($(this).data('target')).slideToggle().toggleClass('open');
+        $(this).find('i').toggleClass('fa-rotate-180');
+      });
+
+      // Load and group GitHub repos
+      $.get('https://api.github.com/users/PedrosoY/repos', repos => {
+        const $sec = $('#projetos');
+        const cats = {};
+
+        // Group into WEB or by language
+        repos.forEach(r => {
+          let key;
+          if (['HTML', 'CSS', 'JavaScript'].includes(r.language)) {
+            key = 'WEB - HTML, CSS e JS';
+          } else {
+            key = r.language || 'Sem linguagem definida';
+          }
+          // Exclude the "PedrosoY" repo from undefined section
+          if (key === 'Sem linguagem definida' && r.name === 'PedrosoY') return;
+          cats[key] = cats[key] || [];
+          cats[key].push(r);
+        });
+
+        // Sort categories by number of projects descending
+        Object.keys(cats)
+          .sort((a, b) => cats[b].length - cats[a].length)
+          .forEach(lang => {
+            const arr = cats[lang];
+            // Sort within each group by stars desc
+            arr.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
+
+            // Build toggle header + content container
+            const id = lang.replace(/\W+/g, '').toLowerCase();
+            $sec.append(
+              `<div class="toggle-header" data-target="#${id}">
+               <h3>${lang} (${arr.length})</h3><i class="fas fa-chevron-down"></i>
+             </div>`
+            );
+            $sec.append(`<div id="${id}" class="toggle-content"></div>`);
+
+            // Append each project card
+            arr.forEach(r => {
+              const $card = $('<div>', { class: 'card' });
+              $card.append(`<h3>${r.name}</h3>`);
+              $card.append(`<p>${r.description || ''}</p>`);
+              $card.append(`<p><strong>Linguagem:</strong> ${r.language || '—'}</p>`);
+              $card.append($('<a>', {
+                href: r.html_url,
+                target: '_blank',
+                text: 'Ver no GitHub',
+                class: 'btn'
+              }));
+              $(`#${id}`).append($card);
+            });
+          });
       });
     });
   </script>
+
+
 </body>
 
 </html>
