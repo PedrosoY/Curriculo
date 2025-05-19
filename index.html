@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio — Pedro Paulo Santos de Jesus Júnior</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pY1+JyZY4v5e9xXuoZ0pEpeG8Y+lJ8DpqZtlH1+cmMHnkwc8LaYQdUA0pJ3OIcfN6hnR1F4Uz0iTF6t7vZp9Vg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --card: #1e1e1e;
+      --primary: #805ad5;
+      --accent: #38b2ac;
+      --text: #e2e8f0;
+      --muted: #718096;
+      --transition: 0.4s
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden
+    }
+
+    header,
+    .hero,
+    .fade-in,
+    .toggle-header,
+    .card,
+    .contact-card,
+    h2.section-title {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease-out, transform .6s ease-out
+    }
+
+    .visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+      z-index: 100
+    }
+
+    .logo {
+      font: 700 1.5rem/1 Inter;
+      color: var(--primary);
+      cursor: pointer;
+      animation: flash 2s infinite
+    }
+
+    @keyframes flash {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .7
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--accent);
+      cursor: pointer
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem
+    }
+
+    nav a {
+      position: relative;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      padding: .2rem 0;
+      transition: color var(--transition)
+    }
+
+    nav a:hover {
+      color: var(--accent)
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+      transform: translateX(-50%)
+    }
+
+    nav a:hover::after {
+      width: 100%
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      padding: .5rem 1rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s
+    }
+
+    .btn:hover {
+      transform: scale(1.05)
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, .2);
+      transition: left .3s ease
+    }
+
+    .btn:hover::after {
+      left: 100%
+    }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+      overflow: hidden;
+      position: relative;
+      cursor: move
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(255, 255, 255, .1), transparent);
+      pointer-events: none
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    h2.section-title {
+      position: relative;
+      font: 600 2.5rem/1 Inter;
+      color: var(--primary);
+      text-align: center;
+      margin: 2rem 0 1rem
+    }
+
+    h2.section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      transform: translateX(-50%)
+    }
+
+    h2.section-title.visible {
+      animation: scaleUp .5s ease-out
+    }
+
+    @keyframes scaleUp {
+      0% {
+        transform: scale(0.9)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    .timeline,
+    .card-grid,
+    .toggle-content.open {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem
+    }
+
+    .timeline {
+      grid-template-columns: none;
+      margin-left: 1rem;
+      padding-left: 2rem;
+      position: relative
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px
+    }
+
+    .timeline-item {
+      position: relative;
+      animation: fadeInUp .6s ease-out forwards
+    }
+
+    .timeline-item:nth-child(1) {
+      animation-delay: .2s
+    }
+
+    .timeline-item:nth-child(2) {
+      animation-delay: .4s
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .toggle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer
+    }
+
+    .toggle-header.visible {
+      animation: fadeInUp .6s ease-out forwards
+    }
+
+    .toggle-header i {
+      transition: transform var(--transition)
+    }
+
+    .toggle-header.open i {
+      transform: rotate(180deg)
+    }
+
+    .toggle-content {
+      display: none
+    }
+
+    .contact-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .4);
+      max-width: 400px;
+      margin: 0 auto;
+      animation: fadeInUp .6s ease-out forwards;
+      animation-delay: .2s
+    }
+
+    .contact-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--accent);
+      margin-bottom: 1rem;
+      transition: transform .3s
+    }
+
+    .contact-card img:hover {
+      transform: scale(1.1)
+    }
+
+    .contact-card h3 {
+      font: 600 1.5rem/1 Inter;
+      margin-bottom: .5rem
+    }
+
+    .contact-details {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem
+    }
+
+    .contact-details a {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition)
+    }
+
+    .contact-details a:hover {
+      color: var(--primary)
+    }
+
+    .loader {
+      border: 4px solid var(--card);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: #fff;
+      padding: .8rem;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      animation: bounceIn .5s ease-out
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0)
+      }
+
+      60% {
+        transform: scale(1.2)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    #back-to-top:hover {
+      transform: scale(1.1)
+    }
+
+    @media(max-width:768px) {
+      .menu-toggle {
+        display: block
+      }
+
+      nav {
+        display: none;
+        flex-direction: column
+      }
+
+      .contact-details {
+        flex-direction: column;
+        gap: 1rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="fade-in">
+    <div class="logo">Pedro Paulo Santos</div>
+    <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    <nav>
+      <a href="#contato">Contato</a><a href="#formacao">Formação</a><a href="#experiencia">Experiência</a><a
+        href="#projetos">Projetos</a><a href="#certificados">Certificados</a>
+    </nav>
+  </header>
+  <div class="hero fade-in">
+    <h1>Pedro Paulo Santos de Jesus Júnior</h1>
+    <p>Técnico em TI • Estudante de Engenharia da Computação • Desenvolvedor de Software</p>
+  </div>
+  <div class="container">
+    <section id="contato">
+      <h2 class="section-title fade-in">Contato</h2>
+      <div class="contact-card">
+        <img src="https://avatars.githubusercontent.com/u/SEU_ID?v=4" alt="Foto de Perfil" />
+        <h3>Pedro Paulo Santos</h3>
+        <a href="https://github.com/PedrosoY" target="_blank" class="btn">Meu Perfil <i class="fab fa-github"></i></a>
+        <div class="contact-details">
+          <a href="https://wa.me/5519998560436" target="_blank"><i class="fab fa-whatsapp"></i><span>(19)
+              99856-0436</span></a>
+          <a href="mailto:ppjunior526@gmail.com"><i class="fas fa-envelope"></i><span>ppjunior526@gmail.com</span></a>
+        </div>
+      </div>
+    </section>
+    <!-- Outras seções (Formação, Experiência, Projetos, Certificados) seguem mesmo padrão de animações -->
+  </div>
+  <button id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+  <script>
+    $(() => {
+      $('.menu-toggle').click(() => $('nav').slideToggle());
+      $(window).scroll(() => {
+        if ($(window).scrollTop() > 300) $('#back-to-top').fadeIn().addClass('visible');
+        else $('#back-to-top').fadeOut().removeClass('visible');
+      });
+      $('#back-to-top').click(() => $('html,body').animate({ scrollTop: 0 }, 500));
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } });
+      }, { threshold: .2, rootMargin: '-50px' });
+      document.querySelectorAll('.fade-in, h2.section-title, .card, .contact-card').forEach(el => io.observe(el));
+      // Parallax simples
+      document.querySelector('.hero').addEventListener('mousemove', e => {
+        const { width, height } = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX / width) * 100; const y = (e.clientY / height) * 100;
+        e.currentTarget.style.backgroundPosition = `${x}% ${y}%`;
+      });
+    });
+  </script>
+</body>
+
+</html>
